@@ -11,7 +11,7 @@ from random import randint
 class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
-
+        
         # example list of members
         self._members = []
 
@@ -21,15 +21,50 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
-        pass
+        
+        if "id" not in member:
+            new_member = {
+            "id":self._generateId(),
+            "first_name":member["first_name"],
+            "last_name":self.last_name,
+            "age":member["age"],
+            "lucky_numbers":member["lucky_numbers"]
+        }
+        else:
+            new_member = {
+                "id":member["id"],
+                "first_name":member["first_name"],
+                "last_name":self.last_name,
+                "age":member["age"],
+                "lucky_numbers":member["lucky_numbers"]
+            }
+        self._members.append(new_member)
+        return new_member
+       
+ 
+
+
+          
+# Ten en cuenta que el diccionario que envía la solicitud POST puede contener una propiedad y un valor para el id del miembro a crear.
+# Si no lo incluye, tu API debe generar un id aleatorio al agregarlo a la familia.
+# Si lo incluye, entonces este es el valor que deberás usar como id al agregarlo.
 
     def delete_member(self, id):
         # fill this method and update the return
-        pass
+        for member in self._members:
+            if member["id"] == id:
+                self._members.remove(member)
+                return True
+        return False
+        
 
     def get_member(self, id):
         # fill this method and update the return
-        pass
+        for member in self._members:
+            if member["id"] == id:
+                return member
+        return None
+        
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
